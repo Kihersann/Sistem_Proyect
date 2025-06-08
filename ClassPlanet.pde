@@ -1,6 +1,7 @@
 class Planeta {
   float distancia, angulo, velocidad, radio;
   PImage textura;
+  Planeta[] lunas;
 
   Planeta(float distancia, float velocidad, float radio, String archivo) {
     this.distancia = distancia;
@@ -34,5 +35,24 @@ class Planeta {
       sphere(radio);
     }
     popMatrix();
+
+    if (lunas != null) {
+    for (Planeta luna : lunas) {
+      luna.actualizar();
+      pushMatrix();
+      rotateY(this.angulo); // que orbitan con el planeta
+      translate(this.distancia, 0, 0); // posición del planeta
+      luna.mostrar();
+      popMatrix();
+    }
   }
+
+}
+  
+  
+  void agregarLunas(Planeta[] lunas) {
+  this.lunas = lunas;
+  }
+
+  
 }
