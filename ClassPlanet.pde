@@ -46,13 +46,9 @@ class Planeta {
       popMatrix();
     }
   }
-
 }
-  
-  
+    
   void agregarLunas(Planeta[] lunas) {
   this.lunas = lunas;
-  }
-
-  
+  }  
 }
