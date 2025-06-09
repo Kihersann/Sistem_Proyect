@@ -7,7 +7,7 @@ class Planeta {
     this.distancia = distancia;
     this.velocidad = velocidad;
     this.radio = radio;
-    this.angulo = random(TWO_PI);
+    this.angulo = random(0);
     this.textura = loadImage(archivo);
   }
 
@@ -50,5 +50,5 @@ class Planeta {
     
   void agregarLunas(Planeta[] lunas) {
   this.lunas = lunas;
-  }  
+ }
 }
