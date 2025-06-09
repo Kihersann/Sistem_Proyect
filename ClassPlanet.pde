@@ -22,14 +22,9 @@ class Planeta {
     noStroke();
 
     if (textura != null) {
-      //textureMode(NORMAL);
-      //sphereDetail(24);
-      //texture(this.textura);
-      //sphere(radio);
       PShape plan = createShape(SPHERE, radio);
       plan.setTexture(this.textura);
       shape(plan);
-      // No pongas endShape(); porque no estás usando vértices
     } else {
       fill(100, 100, 255);
       sphere(radio);

@@ -8,7 +8,7 @@ AudioPlayer musica;
 
 PImage textura, fondo, texsol; // iniciando variables en PImage para ocupar imagenes externas
 int botonY = 10, botonX = 10; // posicion del boton 
-int botonA = 285, botonL = 110; // tamaño del boton 
+int botonA = 290, botonL = 90; // tamaño del boton 
 boolean detector = false; // variable para detectar boton
 boolean modocambiado = false; // variable para saber si hubo cambio o no de modo
 
@@ -50,11 +50,13 @@ void setup() {
   size(1500, 1000, P3D);
   cam = new PeasyCam(this, 500);
   minim = new Minim(this);
+  // cargamos archivos para imagenes generales y musica
   fondo = loadImage("fondo.jpg");
   texsol = loadImage("sun.jpg");
   musica = minim.loadFile("cornfieldChase.mp3");
-  musica.loop(); 
+  musica.loop(); //genera un bucle en la musica 
 
+  // atribuimos propiedades de los planetas 
   planetas = new Planeta[9];
   for (int i = 0; i < planetas.length; i++) {
     float[] props = propiedadesDecorativas[i];
@@ -66,22 +68,22 @@ void setup() {
 
 void draw() {
   background(0); 
- // lights(); 
+  lights(); 
  
-  cam.beginHUD();
+  cam.beginHUD(); // ayuda a dibujar mas facilmente en 2D
   hint(DISABLE_DEPTH_TEST);
   
-  image(fondo, 0, 0, width, height); // Fondo como imagen
+  image(fondo, 0, 0, width, height); // fondo estrellado como imagen
   
   detector = mouseX > botonX && mouseX < botonX + botonA &&
               mouseY > botonY && mouseY < botonY + botonL;
   
   if (detector) {
-    fill(150,200,255);
+    fill(60, 75, 60);
   } else{
-    fill(100,150,200);
+    fill(30, 50, 30);
   }
-  rect(botonX, botonY, botonA, botonL); // se dibuja boton redondeado 
+  rect(botonX, botonY, botonA, botonL,25); // se dibuja boton redondeado 
   
   // texto del boton
   fill(255);
@@ -96,27 +98,19 @@ void draw() {
   hint(ENABLE_DEPTH_TEST);
   cam.endHUD();
   
-  // Sol
-  
-  
+  // se dibuja el sol con su textura 
   PShape texturasol = createShape(SPHERE, 50);
       texturasol.setTexture(texsol);
       shape(texturasol);
-  
-  /*pushMatrix();
-  fill(255, 200, 0);
-  sphereDetail(30);
-  sphere(50);
-  popMatrix();*/
 
-  // Planetas
+  // metodos de los planetas de su clase
   for (Planeta p : planetas) {
     p.actualizar();
     p.mostrar();
   }  
 }
 
-// genera cambio de valor bool de modocambiado, detecta en que modo esta
+// genera cambio de valor bool de modocambiado, detecta en que modo esta (decorativo o realista)
 void mousePressed() {
   if (detector) {
     modocambiado = !modocambiado;
@@ -136,11 +130,11 @@ void actualizarModoSistema(boolean realista) {
 }
 
 void agregarLunas() {
-  // Tierra
+  // para el planeta tierra
   Planeta lunaTierra = new Planeta(30, 0.03, 4, "luna1.jpg");
   planetas[2].agregarLunas(new Planeta[]{lunaTierra});
 
-  // Júpiter
+  // para jupiter
   Planeta[] lunasJupiter = {
     new Planeta(30, 0.02, 5, "luna2.jpg"),
     new Planeta(40, 0.015, 4, "luna1.jpg"),
@@ -150,6 +144,7 @@ void agregarLunas() {
   planetas[4].agregarLunas(lunasJupiter);
 }
 
+// cierra musica al cerrar programa
 void stop(){
   musica.close();
   minim.stop();
